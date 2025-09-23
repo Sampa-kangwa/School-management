@@ -1,0 +1,2897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zambia School Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3f51b5;
+            --secondary: #7986cb;
+            --accent: #ff4081;
+            --light: #f5f5f5;
+            --dark: #333;
+            --success: #4caf50;
+            --warning: #ffc107;
+            --danger: #f44336;
+            --info: #2196f3;
+            --zambia-green: rgb(0, 151, 13);
+            --zambia-red: #ce1126;
+            --zambia-black: #000000;
+            --zambia-orange: #ef6000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--zambia-green), var(--zambia-green));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .coat-of-arms {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--zambia-green), var(--zambia-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--zambia-black);
+        }
+        
+        .coat-of-arms i {
+            font-size: 30px;
+            color: var(--zambia-black);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .ministry-label {
+            font-size: 0.9rem;
+            color: white;
+            margin-top: 5px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        nav {
+            background-color: var(--zambia-orange);
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 25px 0;
+        }
+        
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: var(--zambia-green);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--zambia-orange);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--zambia-green);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 151, 57, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--zambia-green), var(--zambia-orange));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #e91e63);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #4caf50);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #ff9800);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table th {
+            background-color: var(--zambia-green);
+            color: white;
+            font-weight: 600;
+        }
+        
+        table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .card-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--zambia-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .badge-pass {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .badge-credit {
+            background-color: var(--info);
+            color: white;
+        }
+        
+        .badge-merit {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-distinction {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .student-id {
+            font-family: monospace;
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 15px;
+            border: 2px dashed #ccc;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+        
+        .email-btn {
+            background-color: #ea4335;
+        }
+        
+        .print-btn {
+            background-color: #6c757d;
+        }
+        
+        .sms-btn {
+            background-color: #6f42c1;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--zambia-green);
+        }
+        
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .subject-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--zambia-green), var(--zambia-orange));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .image-upload {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--zambia-green);
+        }
+        
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .school-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--zambia-green);
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .student-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--zambia-green);
+        }
+        
+        .student-info {
+            flex: 1;
+        }
+        
+        .student-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .student-details {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .term-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .term-btn {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .term-btn.active {
+            background: var(--zambia-green);
+            color: white;
+            border-color: var(--zambia-green);
+        }
+        
+        .term-btn:hover {
+            background: var(--zambia-orange);
+            color: white;
+            border-color: var(--zambia-orange);
+        }
+        
+        .student-portal {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .camera-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        #camera-video {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        #capture-btn {
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        #camera-capture {
+            display: none;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .developer-info {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 151, 57, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: right;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .developer-info a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .developer-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .grading-option {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--zambia-green);
+        }
+        
+        .grading-option label {
+            display: inline-block;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .grading-option input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+            
+            .student-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .term-selector {
+                flex-wrap: wrap;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .developer-info {
+                position: static;
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Developer Information -->
+    <div class="developer-info">
+        <strong>Developed by Sampa Kangwa</strong><br>
+        <i class="fas fa-phone"></i> <a href="tel:0964054325">0964054325</a><br>
+        <i class="fas fa-envelope"></i> <a href="mailto:sampakangwa13@gmail.com">sampakangwa13@gmail.com</a>
+        <p>&copy; 2025 Umbrella ⛱ corporation  .All rights reserved </p>
+    </div>
+
+    <!-- Login Section -->
+    <section id="login-section" class="section active">
+        <div class="login-container">
+            <div class="logo-container" style="justify-content: center; margin-bottom: 20px;">
+                <div class="coat-of-arms">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <h2>Zambia Ministry of Education</h2>
+                    <p class="ministry-label">School Management System</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <label for="login-school">School (Optional for Super Admin):</label>
+                <select id="login-school">
+                    <option value="">Select School</option>
+                </select>
+            </div>
+            <button onclick="login()" style="width: 100%;"><i class="fas fa-sign-in-alt"></i> Login</button>
+            
+            <div class="student-portal">
+                <h3><i class="fas fa-user-graduate"></i> Student Portal</h3>
+                <p>Students can check their results using their Student ID</p>
+                <div class="form-group">
+                    <input type="text" id="student-portal-id" placeholder="Enter Student ID">
+                </div>
+                <button onclick="checkStudentResults()"><i class="fas fa-search"></i> Check Results</button>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                
+                <p>Demo School Admin: username: <code>admin</code> password: <code>admin123</code></p>
+                <p>Demo Teacher: username: <code>teacher</code> password: <code>teacher123</code></p>
+            </div>
+        </div>
+    </section>
+    
+    <div id="main-system" style="display: none;">
+        <header>
+            <div class="container header-content">
+                <div class="logo-container">
+                    <div class="coat-of-arms">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h1 id="header-school-name">Zambia School Management System</h1>
+                        <div class="ministry-label">Ministry of Education</div>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="logged-in-user">Admin</span>
+                    <span id="logged-in-role" class="school-badge">Admin</span>
+                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+        </header>
+        
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="#" onclick="showSection('dashboard-section')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li id="nav-user-section"><a href="#" onclick="showSection('user-section')"><i class="fas fa-users"></i> User Accounts</a></li>
+                    <li id="nav-school-section"><a href="#" onclick="showSection('school-section')"><i class="fas fa-school"></i> Schools</a></li>
+                    <li><a href="#" onclick="showSection('student-section')"><i class="fas fa-user-graduate"></i> Student Registration</a></li>
+                    <li><a href="#" onclick="showSection('results-section')"><i class="fas fa-chart-bar"></i> Results Analysis</a></li>
+                    <li><a href="#" onclick="showSection('share-section')"><i class="fas fa-share-alt"></i> Share Results</a></li>
+                    <li><a href="#" onclick="showSection('transfer-section')"><i class="fas fa-exchange-alt"></i> Student Transfer</a></li>
+                    <li><a href="#" onclick="showSection('promotion-section')"><i class="fas fa-graduation-cap"></i> Year Promotion</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="section active">
+                <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-students">0</div>
+                        <div class="stat-label">Total Students</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-passrate">0%</div>
+                        <div class="stat-label">Overall Pass Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-distinctions">0</div>
+                        <div class="stat-label">Distinctions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-teachers">0</div>
+                        <div class="stat-label">Teachers</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-bell"></i> Recent Activities</div>
+                    <ul id="recent-activities" style="list-style: none;">
+                        <li style="padding: 10px; border-bottom: 1px solid #eee;"><i class="fas fa-info-circle text-info"></i> Welcome to the School Management System</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- School Management Section (Super Admin only) -->
+            <section id="school-section" class="section">
+                <h2><i class="fas fa-school"></i> School Management</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-plus-circle"></i> Register New School</div>
+                    <div class="form-group">
+                        <label for="school-name">School Name:</label>
+                        <input type="text" id="school-name" placeholder="Enter school name">
+                    </div>
+                    <div class="form-group">
+                        <label for="school-location">Location:</label>
+                        <input type="text" id="school-location" placeholder="Enter school location">
+                    </div>
+                    <div class="form-group">
+                        <label for="school-logo">School Logo URL:</label>
+                        <input type="text" id="school-logo" placeholder="Enter logo URL (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="school-admin">Admin Username:</label>
+                        <input type="text" id="school-admin" placeholder="Enter admin username">
+                    </div>
+                    <div class="form-group">
+                        <label for="school-admin-password">Admin Password:</label>
+                        <input type="password" id="school-admin-password" placeholder="Enter admin password">
+                    </div>
+                    <div class="form-group">
+                        <label for="sms-api-key">SMS API Key (optional):</label>
+                        <input type="text" id="sms-api-key" placeholder="Enter SMS API key">
+                    </div>
+                    <button onclick="registerSchool()"><i class="fas fa-plus-circle"></i> Register School</button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list"></i> Registered Schools</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>School Name</th>
+                                <th>Location</th>
+                                <th>Admin</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="school-table-body">
+                            <!-- Schools will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- User Account Section -->
+            <section id="user-section" class="section">
+                <h2><i class="fas fa-users"></i> User Account Management</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-user-plus"></i> Create New User</div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role:</label>
+                        <select id="role">
+                            <option value="teacher">Teacher</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
+                    <button onclick="createUser()"><i class="fas fa-plus-circle"></i> Create User</button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list"></i> Existing Users</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Users will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Student Registration Section -->
+            <section id="student-section" class="section">
+                <h2><i class="fas fa-user-graduate"></i> Student Registration</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-user-plus"></i> Register New Student</div>
+                    <div class="form-group">
+                        <label for="student-name">Full Name:</label>
+                        <input type="text" id="student-name" placeholder="Enter student's full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-dob">Date of Birth:</label>
+                        <input type="date" id="student-dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-grade">Grade/Class:</label>
+                        <select id="student-grade">
+                           
+                            </optgroup>
+                            <optgroup label="CHOOSE GRADE OF THE PUPIL YOU ARE REGISTERING">
+                                <option value="BABY CLASS">BABY CLASS</option>
+                                <option value="PRESCHOOL">PRESCHOOL</option>
+                                  <option value="Grade 1">Grade 1</option>
+                                <option value="Grade 2">Grade 2</option>
+                                <option value="Grade 3">Grade 3</option>
+                                   <option value="Grade 4">Grade 4</option>
+                                <option value="Grade 5">Grade 5</option>
+                                <option value="Grade 6">Grade 6</option>
+                                <option value="Grade 7">Grade 7</option>
+                                <option value="Form 1">Form 1</option>
+                                <option value="Form 2">Form 2</option>
+                                <option value="Form 3">Form 3</option>
+                                <option value="Form 4">Form 4</option>
+                                 <option value="STANDARD 1 /FORM 5">STANDARD 1 / FORM 5</option>
+                                <option value="STANDARD 2/FORM 6">STANDARD 2 / FORM 6</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="parent-name">Parent/Guardian Name:</label>
+                        <input type="text" id="parent-name" placeholder="Enter parent/guardian name">
+                    </div>
+                    <div class="form-group">
+                        <label for="parent-phone">Parent/Guardian Phone:</label>
+                        <input type="tel" id="parent-phone" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="parent-email">Parent/Guardian Email:</label>
+                        <input type="email" id="parent-email" placeholder="Enter email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Student Photo:</label>
+                        <div class="image-upload" onclick="document.getElementById('student-photo').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 24px;"></i>
+                            <p>Click to upload student photo</p>
+                            <input type="file" id="student-photo" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                            <img id="preview-img" class="preview-image" src="" alt="Preview">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Or use camera:</label>
+                        <button onclick="openCamera()"><i class="fas fa-camera"></i> Open Camera</button>
+                        <div id="camera-container" class="camera-container" style="display: none;">
+                            <video id="camera-video" autoplay></video>
+                            <button id="capture-btn" onclick="captureImage()"><i class="fas fa-camera"></i> Capture Photo</button>
+                            <canvas id="camera-capture" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                    
+                    <button onclick="registerStudent()"><i class="fas fa-user-plus"></i> Register Student</button>
+                    
+                    <div id="student-id-display" class="student-id" style="display: none;">
+                        <!-- Student ID will be displayed here -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list"></i> Registered Students</div>
+                    <div id="students-list">
+                        <!-- Students will be listed here -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Results Analysis Section -->
+            <section id="results-section" class="section">
+                <h2><i class="fas fa-chart-bar"></i> Results Analysis</h2>
+                
+                <!-- Grading System Option for Teachers -->
+                <div id="grading-option-section" style="display: none;">
+                    <div class="grading-option">
+                        <h4><i class="fas fa-calculator"></i> Grading System Selection</h4>
+                        <p>Choose how to handle tied scores when calculating class positions:</p>
+                        <label>
+                            <input type="radio" name="grading-system" value="normal" checked> 
+                            Normal System (If two students have same score, next position skips by 2)
+                        </label>
+                        <label>
+                            <input type="radio" name="grading-system" value="skip"> 
+                            Skip System (If two students have same score, next position skips the tied count)
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-calculator"></i> Enter Results</div>
+                    <div class="form-group">
+                        <label for="result-student">Select Student:</label>
+                        <select id="result-student">
+                            <option value="">Select Student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="result-term">Select Term:</label>
+                        <select id="result-term">
+                            <option value="Term 1">Term 1</option>
+                            <option value="Term 2">Term 2</option>
+                            <option value="Term 3">Term 3</option>
+                            <option value="Mid-Term">Mid-Term Test</option>
+                        </select>
+                    </div>
+                    
+                    <div id="subject-inputs" class="subject-grid">
+                        <!-- Subject inputs will be generated here -->
+                    </div>
+                    
+                    <button onclick="analyzeResults()"><i class="fas fa-calculator"></i> Analyze Results</button>
+                </div>
+                
+                <div id="results-analysis" style="display: none;">
+                    <div class="card">
+                        <div class="card-header"><i class="fas fa-chart-pie"></i> Overall Performance</div>
+                        <div id="overall-performance">
+                            <!-- Overall performance will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header"><i class="fas fa-table"></i> Subject-wise Performance</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Score</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subject-performance">
+                                <!-- Subject performance will be displayed here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="primary-class-positions" style="display: none;">
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-trophy"></i> Class Positions (Primary)</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Student Name</th>
+                                        <th>Total Score</th>
+                                        <th>Average</th>
+                                        <th>Grading System Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="class-positions-body">
+                                    <!-- Class positions will be displayed here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Share Results Section -->
+            <section id="share-section" class="section">
+                <h2><i class="fas fa-share-alt"></i> Share Results</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-paper-plane"></i> Select Student to Share Results</div>
+                    <div class="form-group">
+                        <label for="share-student">Select Student:</label>
+                        <select id="share-student">
+                            <option value="">Select Student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="share-term">Select Term:</label>
+                        <select id="share-term">
+                            <option value="Term 1">Term 1</option>
+                            <option value="Term 2">Term 2</option>
+                            <option value="Term 3">Term 3</option>
+                            <option value="Mid-Term">Mid-Term Test</option>
+                            <option value="All">All Terms</option>
+                        </select>
+                    </div>
+                    
+                    <div id="share-result-display">
+                        <!-- Result summary will be displayed here -->
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <a id="whatsapp-link" class="share-btn whatsapp-btn" style="display: none;" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+                        </a>
+                        <a id="email-link" class="share-btn email-btn" style="display: none;" href="#">
+                            <i class="fas fa-envelope"></i> Send via Email
+                        </a>
+                        <a id="print-link" class="share-btn print-btn" style="display: none;" href="#">
+                            <i class="fas fa-print"></i> Print Results
+                        </a>
+                        <a id="sms-link" class="share-btn sms-btn" style="display: none;" href="#" onclick="sendSMS()">
+                            <i class="fas fa-sms"></i> Send via SMS
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Student Transfer Section -->
+            <section id="transfer-section" class="section">
+                <h2><i class="fas fa-exchange-alt"></i> Student Transfer</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-user-graduate"></i> Transfer Student</div>
+                    <div class="form-group">
+                        <label for="transfer-student">Select Student:</label>
+                        <select id="transfer-student">
+                            <option value="">Select Student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transfer-school">Select Target School:</label>
+                        <select id="transfer-school">
+                            <option value="">Select School</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transfer-reason">Reason for Transfer:</label>
+                        <textarea id="transfer-reason" placeholder="Enter reason for transfer"></textarea>
+                    </div>
+                    
+                    <button onclick="transferStudent()"><i class="fas fa-exchange-alt"></i> Transfer Student</button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-history"></i> Transfer History</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Student</th>
+                                <th>From School</th>
+                                <th>To School</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transfer-history">
+                            <!-- Transfer history will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Year Promotion Section -->
+            <section id="promotion-section" class="section">
+                <h2><i class="fas fa-graduation-cap"></i> Year Promotion</h2>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-user-graduate"></i> Promote Students to Next Year</div>
+                    <p>This function will promote all students to the next grade level. For example, Form 1 students will become Form 2 students.</p>
+                    <p><strong>Note:</strong> This action should only be performed at the end of the academic year.</p>
+                    
+                    <div class="form-group">
+                        <label for="promotion-year">Academic Year:</label>
+                        <input type="number" id="promotion-year" min="2023" max="2030" value="2023">
+                    </div>
+                    
+                    <button onclick="promoteStudents()" class="btn-success"><i class="fas fa-graduation-cap"></i> Promote Students</button>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="repeat-student">Select Student to Repeat Grade:</label>
+                        <select id="repeat-student">
+                            <option value="">Select Student</option>
+                        </select>
+                    </div>
+                    
+                    <button onclick="repeatGrade()" class="btn-warning"><i class="fas fa-redo"></i> Repeat Grade</button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list"></i> Promotion History</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Academic Year</th>
+                                <th>Students Promoted</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promotion-history">
+                            <!-- Promotion history will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Data storage with school isolation
+        let schools = JSON.parse(localStorage.getItem('schools')) || [];
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        let results = JSON.parse(localStorage.getItem('results')) || [];
+        let promotions = JSON.parse(localStorage.getItem('promotions')) || [];
+        let transfers = JSON.parse(localStorage.getItem('transfers')) || [];
+        
+        // Current user and school context
+        let currentUser = null;
+        let currentSchool = null;
+        
+        // Grading system setting
+        let currentGradingSystem = 'normal'; // 'normal' or 'skip'
+        
+        // Available subjects for different levels
+        const lowerPrimarySubjects = [
+            'Mathematics and Science', 'Creative Technology Studies', 
+            'Zambian Language', 'English'
+        ];
+        
+        const upperPrimarySubjects = [
+            'Integrated Science', 'Social Studies', 'English', 
+            'Creative Technology Studies', 'Special Paper 1', 'Special Paper 2'
+        ];
+        
+        const secondarySubjects = [
+            'Mathematics', 'English', 'Science', 'Biology', 'Physics', 'Chemistry',
+            'Art', 'Music', 'Additional Mathematics', 'Geometric Drawing', 'Woodwork',
+            'Home Economics', 'Food and Nutrition', 'Literature', 'Civic Education',
+            'History', 'French', 'Zambian Language','Integrated Science', 'Social Studies', 'English', 
+            'Creative Technology Studies', 'Special Paper 1', 'Special Paper 2','Mathematics and Science', 'Creative Technology Studies', 
+            'Zambian Language', 'English'
+        ];
+        
+        // Initialize the application
+        function init() {
+            // Check if we have a logged in user
+            const savedUser = localStorage.getItem('currentUser');
+            const savedSchool = localStorage.getItem('currentSchool');
+            
+            if (savedUser && savedSchool) {
+                currentUser = JSON.parse(savedUser);
+                currentSchool = JSON.parse(savedSchool);
+                
+                // Show main system
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+                
+                // Update UI based on user role
+                updateUIForUser();
+                
+                // Load data
+                loadDashboardData();
+                displayUsers();
+                displayStudents();
+                populateStudentDropdowns();
+                generateSubjectInputs();
+                populateSchoolDropdown();
+                displayPromotionHistory();
+                displayTransferHistory();
+            } else {
+                // Initialize with demo data if no data exists
+                initializeDemoData();
+                populateSchoolDropdown();
+            }
+        }
+        
+        // Initialize demo data for first-time users
+        function initializeDemoData() {
+            if (schools.length === 0) {
+                // Create a demo school
+                const demoSchool = {
+                    id: 'demo-school-1',
+                    name: 'Demo Secondary School',
+                    location: 'Lusaka',
+                    logo: '',
+                    smsApiKey: '',
+                    createdAt: new Date().toISOString()
+                };
+                schools.push(demoSchool);
+                
+                // Create demo users
+                const demoUsers = [
+                    {
+                        id: 'demo-admin-1',
+                        username: 'admin',
+                        password: 'admin123',
+                        role: 'admin',
+                        schoolId: 'demo-school-1',
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'demo-teacher-1',
+                        username: 'teacher',
+                        password: 'teacher123',
+                        role: 'teacher',
+                        schoolId: 'demo-school-1',
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                demoUsers.forEach(user => users.push(user));
+                
+                // Create demo students
+                const demoStudents = [
+                    {
+                        id: 'demo-student-1',
+                        studentId: 'SCH-2023-1001',
+                        name: 'John Banda',
+                        dob: '2008-05-15',
+                        grade: 'Form 2',
+                        parentName: 'Mary Banda',
+                        parentPhone: '0977123456',
+                        parentEmail: 'mary.banda@email.com',
+                        schoolId: 'demo-school-1',
+                        registeredAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'demo-student-2',
+                        studentId: 'SCH-2023-1002',
+                        name: 'Sarah Mwansa',
+                        dob: '2007-11-20',
+                        grade: 'Form 3',
+                        parentName: 'David Mwansa',
+                        parentPhone: '0977654321',
+                        parentEmail: 'david.mwansa@email.com',
+                        schoolId: 'demo-school-1',
+                        registeredAt: new Date().toISOString()
+                    }
+                ];
+                demoStudents.forEach(student => students.push(student));
+                
+                // Save to localStorage
+                localStorage.setItem('schools', JSON.stringify(schools));
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('students', JSON.stringify(students));
+            }
+        }
+        
+        // Login function
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const schoolId = document.getElementById('login-school').value;
+            
+            if (!username || !password) {
+                alert('Please enter username and password');
+                return;
+            }
+            
+            // Check for super admin
+            if (username === 'superadmin' && password === '232700') {
+                currentUser = {
+                    id: 'superadmin',
+                    username: 'superadmin',
+                    role: 'superadmin'
+                };
+                currentSchool = null;
+                
+                // Show main system
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+                
+                // Update UI for super admin
+                updateUIForUser();
+                
+                // Load schools data
+                displaySchools();
+                
+                // Save login state
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('currentSchool', JSON.stringify(currentSchool));
+                
+                return;
+            }
+            
+            // Check for regular users
+            let user = null;
+            
+            if (schoolId) {
+                // Login to specific school
+                user = users.find(u => 
+                    u.username === username && 
+                    u.password === password && 
+                    u.schoolId === schoolId
+                );
+                
+                if (user) {
+                    currentSchool = schools.find(s => s.id === schoolId);
+                }
+            } else {
+                // Try to find user in any school
+                user = users.find(u => u.username === username && u.password === password);
+                
+                if (user) {
+                    currentSchool = schools.find(s => s.id === user.schoolId);
+                }
+            }
+            
+            if (user && currentSchool) {
+                currentUser = user;
+                
+                // Show main system
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+                
+                // Update UI based on user role
+                updateUIForUser();
+                
+                // Load data
+                loadDashboardData();
+                displayUsers();
+                displayStudents();
+                populateStudentDropdowns();
+                generateSubjectInputs();
+                
+                // Save login state
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('currentSchool', JSON.stringify(currentSchool));
+                
+                // Update header with school name
+                document.getElementById('header-school-name').textContent = currentSchool.name;
+            } else {
+                alert('Invalid username, password, or school');
+            }
+        }
+        
+        // Update UI based on user role
+        function updateUIForUser() {
+            const userRole = currentUser.role;
+            const navUserSection = document.getElementById('nav-user-section');
+            const navSchoolSection = document.getElementById('nav-school-section');
+            const gradingOptionSection = document.getElementById('grading-option-section');
+            
+            // Show/hide sections based on role
+            if (userRole === 'superadmin') {
+                navUserSection.style.display = 'none';
+                navSchoolSection.style.display = 'list-item';
+                gradingOptionSection.style.display = 'none';
+                showSection('school-section');
+            } else if (userRole === 'admin') {
+                navUserSection.style.display = 'list-item';
+                navSchoolSection.style.display = 'none';
+                gradingOptionSection.style.display = 'none';
+                showSection('dashboard-section');
+            } else {
+                navUserSection.style.display = 'none';
+                navSchoolSection.style.display = 'none';
+                gradingOptionSection.style.display = 'block';
+                showSection('dashboard-section');
+            }
+            
+            // Update user info in header
+            document.getElementById('logged-in-user').textContent = currentUser.username;
+            document.getElementById('logged-in-role').textContent = userRole;
+            
+            // Add event listener for grading system selection
+            document.querySelectorAll('input[name="grading-system"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    currentGradingSystem = this.value;
+                });
+            });
+        }
+        
+        // Calculate class positions with selected grading system
+        function calculateClassPositions(grade, term) {
+            // Get all students in the same grade
+            const classStudents = students.filter(s => s.schoolId === currentSchool.id && s.grade === grade);
+            
+            // Calculate total scores for each student
+            const studentScores = [];
+            
+            classStudents.forEach(student => {
+                const studentResults = results.filter(r => 
+                    r.studentId === student.id && 
+                    r.term === term &&
+                    r.grade === grade
+                );
+                
+                if (studentResults.length > 0) {
+                    const totalScore = studentResults.reduce((sum, result) => sum + result.score, 0);
+                    studentScores.push({
+                        studentId: student.id,
+                        name: student.name,
+                        totalScore,
+                        average: totalScore / studentResults.length
+                    });
+                }
+            });
+            
+            // Sort by total score (descending)
+            studentScores.sort((a, b) => b.totalScore - a.totalScore);
+            
+            const classPositionsBody = document.getElementById('class-positions-body');
+            classPositionsBody.innerHTML = '';
+            
+            if (currentGradingSystem === 'normal') {
+                // Normal system: If two students have same score, next position skips by 2
+                let position = 1;
+                let previousScore = -1;
+                
+                studentScores.forEach((student, index) => {
+                    if (student.totalScore !== previousScore) {
+                        position = index + 1;
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${position}</td>
+                        <td>${student.name}</td>
+                        <td>${student.totalScore}</td>
+                        <td>${student.average.toFixed(2)}%</td>
+                        <td>Normal System</td>
+                    `;
+                    classPositionsBody.appendChild(row);
+                    
+                    previousScore = student.totalScore;
+                });
+            } else {
+                // Skip system: If two students have same score, next position skips the tied count
+                let position = 1;
+                let previousScore = -1;
+                let skipCount = 0;
+                
+                studentScores.forEach((student, index) => {
+                    if (student.totalScore !== previousScore) {
+                        position = position + skipCount;
+                        skipCount = 0;
+                    } else {
+                        skipCount++;
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${position}</td>
+                        <td>${student.name}</td>
+                        <td>${student.totalScore}</td>
+                        <td>${student.average.toFixed(2)}%</td>
+                        <td>Skip System</td>
+                    `;
+                    classPositionsBody.appendChild(row);
+                    
+                    previousScore = student.totalScore;
+                });
+            }
+        }
+
+        // ... (rest of the JavaScript code remains the same as previous version)
+        // [The rest of the JavaScript code is identical to the previous version]
+        // Only the calculateClassPositions function and updateUIForUser function were modified
+        
+        // Load dashboard data
+        function loadDashboardData() {
+            if (currentUser.role === 'superadmin') {
+                // Super admin sees system-wide stats
+                const totalStudents = students.length;
+                const totalTeachers = users.filter(u => u.role === 'teacher').length;
+                
+                document.getElementById('stat-students').textContent = totalStudents;
+                document.getElementById('stat-teachers').textContent = totalTeachers;
+                document.getElementById('stat-passrate').textContent = 'N/A';
+                document.getElementById('stat-distinctions').textContent = 'N/A';
+            } else {
+                // School-specific stats
+                const schoolStudents = students.filter(s => s.schoolId === currentSchool.id);
+                const schoolTeachers = users.filter(u => u.schoolId === currentSchool.id && u.role === 'teacher');
+                const schoolResults = results.filter(r => r.schoolId === currentSchool.id);
+                
+                // Calculate pass rate and distinctions
+                let passRate = 0;
+                let distinctions = 0;
+                
+                if (schoolResults.length > 0) {
+                    const passed = schoolResults.filter(r => r.score >= 40).length;
+                    passRate = Math.round((passed / schoolResults.length) * 100);
+                    distinctions = schoolResults.filter(r => r.score >= 70).length;
+                }
+                
+                document.getElementById('stat-students').textContent = schoolStudents.length;
+                document.getElementById('stat-teachers').textContent = schoolTeachers.length;
+                document.getElementById('stat-passrate').textContent = `${passRate}%`;
+                document.getElementById('stat-distinctions').textContent = distinctions;
+            }
+        }
+        
+        // Show the selected section
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        // Register a new school (Super Admin only)
+        function registerSchool() {
+            if (currentUser.role !== 'superadmin') {
+                alert('Only Super Admin can register schools');
+                return;
+            }
+            
+            const name = document.getElementById('school-name').value;
+            const location = document.getElementById('school-location').value;
+            const logo = document.getElementById('school-logo').value;
+            const adminUsername = document.getElementById('school-admin').value;
+            const adminPassword = document.getElementById('school-admin-password').value;
+            const smsApiKey = document.getElementById('sms-api-key').value;
+            
+            if (!name || !location || !adminUsername || !adminPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Generate school ID
+            const schoolId = Date.now().toString();
+            
+            // Create school object
+            const newSchool = {
+                id: schoolId,
+                name,
+                location,
+                logo,
+                smsApiKey,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Create admin user for the school
+            const adminUser = {
+                id: Date.now().toString(),
+                username: adminUsername,
+                password: adminPassword,
+                role: 'admin',
+                schoolId: schoolId,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save to storage
+            schools.push(newSchool);
+            users.push(adminUser);
+            
+            localStorage.setItem('schools', JSON.stringify(schools));
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Update UI
+            displaySchools();
+            populateSchoolDropdown();
+            
+            // Clear form
+            document.getElementById('school-name').value = '';
+            document.getElementById('school-location').value = '';
+            document.getElementById('school-logo').value = '';
+            document.getElementById('school-admin').value = '';
+            document.getElementById('school-admin-password').value = '';
+            document.getElementById('sms-api-key').value = '';
+            
+            alert('School registered successfully!');
+        }
+        
+        // Display all schools (Super Admin only)
+        function displaySchools() {
+            const schoolTableBody = document.getElementById('school-table-body');
+            schoolTableBody.innerHTML = '';
+            
+            schools.forEach(school => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${school.name}</td>
+                    <td>${school.location}</td>
+                    <td>${users.find(u => u.schoolId === school.id && u.role === 'admin')?.username || 'N/A'}</td>
+                    <td>
+                        <button class="btn-danger" onclick="removeSchool('${school.id}')"><i class="fas fa-trash"></i> Remove</button>
+                    </td>
+                `;
+                schoolTableBody.appendChild(row);
+            });
+        }
+        
+        // Remove a school (Super Admin only)
+        function removeSchool(schoolId) {
+            if (currentUser.role !== 'superadmin') {
+                alert('Only Super Admin can remove schools');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to remove this school? This will also remove all associated users, students, and results.')) {
+                // Remove school
+                schools = schools.filter(s => s.id !== schoolId);
+                
+                // Remove users associated with the school
+                users = users.filter(u => u.schoolId !== schoolId);
+                
+                // Remove students associated with the school
+                students = students.filter(s => s.schoolId !== schoolId);
+                
+                // Remove results associated with the school
+                results = results.filter(r => r.schoolId !== schoolId);
+                
+                // Save to storage
+                localStorage.setItem('schools', JSON.stringify(schools));
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('students', JSON.stringify(students));
+                localStorage.setItem('results', JSON.stringify(results));
+                
+                // Update UI
+                displaySchools();
+                
+                alert('School removed successfully!');
+            }
+        }
+        
+        // Create a new user account
+        function createUser() {
+            if (currentUser.role !== 'admin') {
+                alert('Only School Admin can create users');
+                return;
+            }
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            
+            if (!username || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now().toString(),
+                username,
+                email,
+                password,
+                role,
+                schoolId: currentSchool.id,
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            displayUsers();
+            
+            // Clear the form
+            document.getElementById('username').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('role').value = 'teacher';
+            
+            alert('User created successfully!');
+        }
+        
+        // Display all users
+        function displayUsers() {
+            const userTableBody = document.getElementById('user-table-body');
+            userTableBody.innerHTML = '';
+            
+            // Filter users based on current context
+            let filteredUsers = [];
+            
+            if (currentUser.role === 'superadmin') {
+                filteredUsers = users;
+            } else {
+                filteredUsers = users.filter(user => user.schoolId === currentSchool.id);
+            }
+            
+            filteredUsers.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        ${user.role === 'admin' || currentUser.role !== 'admin' ? 
+                            '<button class="btn-danger" disabled><i class="fas fa-trash"></i> Remove</button>' : 
+                            `<button class="btn-danger" onclick="removeUser('${user.id}')"><i class="fas fa-trash"></i> Remove</button>`
+                        }
+                    </td>
+                `;
+                userTableBody.appendChild(row);
+            });
+        }
+        
+        // Remove a user
+        function removeUser(userId) {
+            if (currentUser.role !== 'admin') {
+                alert('Only School Admin can remove users');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to remove this user?')) {
+                users = users.filter(user => user.id !== userId);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsers();
+                alert('User removed successfully!');
+            }
+        }
+        
+        // Open camera for capturing student photo
+        function openCamera() {
+            const cameraContainer = document.getElementById('camera-container');
+            const video = document.getElementById('camera-video');
+            
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        video.srcObject = stream;
+                        cameraContainer.style.display = 'block';
+                    })
+                    .catch(function(error) {
+                        alert('Unable to access camera: ' + error.message);
+                    });
+            } else {
+                alert('Sorry, your browser does not support camera access.');
+            }
+        }
+        
+        // Capture image from camera
+        function captureImage() {
+            const video = document.getElementById('camera-video');
+            const canvas = document.getElementById('camera-capture');
+            const context = canvas.getContext('2d');
+            
+            // Draw current video frame to canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to data URL
+            const imageData = canvas.toDataURL('image/png');
+            
+            // Stop video stream
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            
+            tracks.forEach(function(track) {
+                track.stop();
+            });
+            
+            // Hide camera container
+            document.getElementById('camera-container').style.display = 'none';
+            
+            // Show preview of captured image
+            const preview = document.getElementById('preview-img');
+            preview.src = imageData;
+            preview.style.display = 'block';
+            
+            // Store image data for registration
+            preview.dataset.captured = imageData;
+        }
+        
+        // Register a new student
+        function registerStudent() {
+            if (currentUser.role !== 'admin' && currentUser.role !== 'teacher') {
+                alert('Only Admin and Teachers can register students');
+                return;
+            }
+            
+            const name = document.getElementById('student-name').value;
+            const dob = document.getElementById('student-dob').value;
+            const grade = document.getElementById('student-grade').value;
+            const parentName = document.getElementById('parent-name').value;
+            const parentPhone = document.getElementById('parent-phone').value;
+            const parentEmail = document.getElementById('parent-email').value;
+            const photoInput = document.getElementById('student-photo');
+            const preview = document.getElementById('preview-img');
+            
+            if (!name || !dob || !grade || !parentName || !parentPhone || !parentEmail) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Generate student ID (format: SCH-YYYY-XXXX)
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const studentId = `SCH-${year}-${randomNum}`;
+            
+            // Handle image upload
+            let photoData = '';
+            if (preview.style.display === 'block' && preview.dataset.captured) {
+                // Use captured image
+                photoData = preview.dataset.captured;
+            } else if (photoInput.files && photoInput.files[0]) {
+                // Use uploaded image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoData = e.target.result;
+                    
+                    // Complete registration after image is loaded
+                    completeStudentRegistration(
+                        name, dob, grade, parentName, parentPhone, parentEmail, studentId, photoData
+                    );
+                };
+                reader.readAsDataURL(photoInput.files[0]);
+                return;
+            }
+            
+            // Complete registration without image or with captured image
+            completeStudentRegistration(
+                name, dob, grade, parentName, parentPhone, parentEmail, studentId, photoData
+            );
+        }
+        
+        // Complete student registration
+        function completeStudentRegistration(name, dob, grade, parentName, parentPhone, parentEmail, studentId, photoData) {
+            const newStudent = {
+                id: Date.now().toString(),
+                studentId,
+                name,
+                dob,
+                grade,
+                parentName,
+                parentPhone,
+                parentEmail,
+                photo: photoData,
+                schoolId: currentSchool.id,
+                registeredAt: new Date().toISOString()
+            };
+            
+            students.push(newStudent);
+            localStorage.setItem('students', JSON.stringify(students));
+            
+            // Display the generated student ID
+            const studentIdDisplay = document.getElementById('student-id-display');
+            studentIdDisplay.innerHTML = `
+                <div>Student ID: ${studentId}</div>
+                <div>Student Name: ${name}</div>
+                <div>Class: ${grade}</div>
+                ${photoData ? `<img src="${photoData}" alt="Student Photo" style="max-width: 150px; margin-top: 10px;">` : ''}
+            `;
+            studentIdDisplay.style.display = 'block';
+            
+            displayStudents();
+            
+            // Clear the form
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-dob').value = '';
+            document.getElementById('student-grade').value = '';
+            document.getElementById('parent-name').value = '';
+            document.getElementById('parent-phone').value = '';
+            document.getElementById('parent-email').value = '';
+            document.getElementById('student-photo').value = '';
+            document.getElementById('preview-img').style.display = 'none';
+            document.getElementById('preview-img').src = '';
+            delete document.getElementById('preview-img').dataset.captured;
+            
+            alert('Student registered successfully!');
+        }
+        
+        // Display all students
+        function displayStudents() {
+            const studentsList = document.getElementById('students-list');
+            studentsList.innerHTML = '';
+            
+            // Filter students based on current context
+            let filteredStudents = [];
+            
+            if (currentUser.role === 'superadmin') {
+                filteredStudents = students;
+            } else {
+                filteredStudents = students.filter(student => student.schoolId === currentSchool.id);
+            }
+            
+            if (filteredStudents.length === 0) {
+                studentsList.innerHTML = '<p>No students registered yet.</p>';
+                return;
+            }
+            
+            filteredStudents.forEach(student => {
+                const school = schools.find(s => s.id === student.schoolId);
+                
+                const studentCard = document.createElement('div');
+                studentCard.className = 'student-card';
+                studentCard.innerHTML = `
+                    ${student.photo ? 
+                        `<img src="${student.photo}" alt="${student.name}" class="student-avatar">` : 
+                        `<div class="student-avatar" style="background: #ccc; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 24px; color: #666;"></i>
+                        </div>`
+                    }
+                    <div class="student-info">
+                        <div class="student-name">${student.name} <span class="school-badge">${student.grade}</span></div>
+                        <div class="student-details">
+                            <div>ID: ${student.studentId}</div>
+                            <div>Parent: ${student.parentName} • ${student.parentPhone}</div>
+                            ${school ? `<div>School: ${school.name}</div>` : ''}
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-warning" onclick="initiateRepeat('${student.id}')"><i class="fas fa-redo"></i> Repeat Grade</button>
+                            <button class="action-btn btn-success" onclick="initiateTransfer('${student.id}')"><i class="fas fa-exchange-alt"></i> Transfer</button>
+                        </div>
+                    </div>
+                `;
+                studentsList.appendChild(studentCard);
+            });
+        }
+        
+        // Initiate student transfer
+        function initiateTransfer(studentId) {
+            document.getElementById('transfer-student').value = studentId;
+            showSection('transfer-section');
+        }
+        
+        // Initiate grade repetition
+        function initiateRepeat(studentId) {
+            document.getElementById('repeat-student').value = studentId;
+            showSection('promotion-section');
+        }
+        
+        // Generate subject input fields based on grade level
+        function generateSubjectInputs() {
+            const subjectInputs = document.getElementById('subject-inputs');
+            subjectInputs.innerHTML = '';
+            
+            const grade = document.getElementById('student-grade').value;
+            let subjects = [];
+            let maxScore = 100;
+            
+            if (grade.includes('Grade 1') || grade.includes('Grade 2') || grade.includes('Grade 3')) {
+                subjects = lowerPrimarySubjects;
+                maxScore = 30; // Lower primary subjects are out of 30
+            } else if (grade.includes('Grade 4') || grade.includes('Grade 5') || grade.includes('Grade 6') || grade.includes('Grade 7')) {
+                subjects = upperPrimarySubjects;
+                maxScore = 60; // Upper primary subjects are out of 60
+            } else {
+                subjects = secondarySubjects;
+                maxScore = 100; // Secondary subjects are out of 100
+            }
+            
+            subjects.forEach(subject => {
+                const subjectCard = document.createElement('div');
+                subjectCard.className = 'subject-card';
+                subjectCard.innerHTML = `
+                    <label for="score-${subject.toLowerCase().replace(/\s+/g, '-')}">${subject}:</label>
+                    <input type="number" id="score-${subject.toLowerCase().replace(/\s+/g, '-')}" min="0" max="${maxScore}" placeholder="Enter score (0-${maxScore})">
+                `;
+                subjectInputs.appendChild(subjectCard);
+            });
+        }
+        
+        // Analyze student results
+        function analyzeResults() {
+            const studentId = document.getElementById('result-student').value;
+            const term = document.getElementById('result-term').value;
+            
+            if (!studentId) {
+                alert('Please select a student');
+                return;
+            }
+            
+            const student = students.find(s => s.id === studentId);
+            if (!student) {
+                alert('Student not found');
+                return;
+            }
+            
+            const grade = student.grade;
+            let subjects = [];
+            let maxScore = 100;
+            
+            if (grade.includes('Grade 1') || grade.includes('Grade 2') || grade.includes('Grade 3')) {
+                subjects = lowerPrimarySubjects;
+                maxScore = 100;
+            } else if (grade.includes('Grade 4') || grade.includes('Grade 5') || grade.includes('Grade 6') || grade.includes('Grade 7')) {
+                subjects = upperPrimarySubjects;
+                maxScore = 100;
+            } else {
+                subjects = secondarySubjects;
+                maxScore = 100;
+            }
+            
+            // Get all entered scores
+            const subjectScores = [];
+            subjects.forEach(subject => {
+                const scoreInput = document.getElementById(`score-${subject.toLowerCase().replace(/\s+/g, '-')}`);
+                const score = parseInt(scoreInput.value) || 0;
+                
+                if (score > 0) {
+                    subjectScores.push({ subject, score });
+                    
+                    // Save individual subject result
+                    const result = {
+                        id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+                        studentId: student.id,
+                        schoolId: currentSchool.id,
+                        subject,
+                        score,
+                        term,
+                        grade: student.grade,
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Check if result already exists for this student and subject
+                    const existingResultIndex = results.findIndex(r => 
+                        r.studentId === student.id && 
+                        r.subject === subject &&
+                        r.term === term
+                    );
+                    
+                    if (existingResultIndex !== -1) {
+                        results[existingResultIndex] = result;
+                    } else {
+                        results.push(result);
+                    }
+                }
+            });
+            
+            if (subjectScores.length === 0) {
+                alert('Please enter at least one subject score');
+                return;
+            }
+            
+            // Calculate total and average
+            const totalScore = subjectScores.reduce((sum, subject) => sum + subject.score, 0);
+            const averageScore = totalScore / subjectScores.length;
+            
+            // Determine grade based on score ranges
+            function getGrade(score) {
+                if (score >= 70) return { grade: 'Distinction', badge: 'distinction' };
+                if (score >= 61) return { grade: 'Merit', badge: 'merit' };
+                if (score >= 51) return { grade: 'Credit', badge: 'credit' };
+                if (score >= 40) return { grade: 'Pass', badge: 'pass' };
+                return { grade: 'Fail', badge: '' };
+            }
+            
+            const overallGrade = getGrade(averageScore);
+            
+            // Display overall performance
+            const overallPerformance = document.getElementById('overall-performance');
+            overallPerformance.innerHTML = `
+                <p>Student: ${student.name} (${student.studentId})</p>
+                <p>Class: ${student.grade}</p>
+                <p>Term: ${term}</p>
+                <p>Total Score: ${totalScore}/${subjectScores.length * maxScore}</p>
+                <p>Average Score: ${averageScore.toFixed(2)}%</p>
+                <p>Overall Grade: ${overallGrade.grade} <span class="badge badge-${overallGrade.badge}">${overallGrade.grade}</span></p>
+            `;
+            
+            // Display subject-wise performance
+            const subjectPerformance = document.getElementById('subject-performance');
+            subjectPerformance.innerHTML = '';
+            
+            subjectScores.forEach(subject => {
+                const gradeInfo = getGrade(subject.score);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${subject.subject}</td>
+                    <td>${subject.score}/${maxScore}</td>
+                    <td>${gradeInfo.grade} ${gradeInfo.badge ? `<span class="badge badge-${gradeInfo.badge}">${gradeInfo.grade}</span>` : ''}</td>
+                `;
+                subjectPerformance.appendChild(row);
+            });
+            
+            // Show the results analysis section
+            document.getElementById('results-analysis').style.display = 'block';
+            
+            // Calculate class positions for primary schools
+            if (grade.includes('Grade')) {
+                calculateClassPositions(student.grade, term);
+                document.getElementById('primary-class-positions').style.display = 'block';
+            } else {
+                document.getElementById('primary-class-positions').style.display = 'none';
+            }
+            
+            // Save the results
+            localStorage.setItem('results', JSON.stringify(results));
+            
+            // Add to recent activities
+            addActivity(`Results analyzed for ${student.name} (${student.grade}) - ${term}`);
+        }
+        
+        // Populate student dropdowns
+        function populateStudentDropdowns() {
+            const resultStudentDropdown = document.getElementById('result-student');
+            const shareStudentDropdown = document.getElementById('share-student');
+            const transferStudentDropdown = document.getElementById('transfer-student');
+            const repeatStudentDropdown = document.getElementById('repeat-student');
+            
+            // Clear existing options except the first one
+            resultStudentDropdown.innerHTML = '<option value="">Select Student</option>';
+            shareStudentDropdown.innerHTML = '<option value="">Select Student</option>';
+            transferStudentDropdown.innerHTML = '<option value="">Select Student</option>';
+            repeatStudentDropdown.innerHTML = '<option value="">Select Student</option>';
+            
+            // Filter students based on current context
+            let filteredStudents = [];
+            
+            if (currentUser.role === 'superadmin') {
+                filteredStudents = students;
+            } else {
+                filteredStudents = students.filter(student => student.schoolId === currentSchool.id);
+            }
+            
+            // Add students to dropdowns
+            filteredStudents.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = `${student.name} (${student.studentId}) - ${student.grade}`;
+                
+                resultStudentDropdown.appendChild(option.cloneNode(true));
+                shareStudentDropdown.appendChild(option.cloneNode(true));
+                transferStudentDropdown.appendChild(option.cloneNode(true));
+                repeatStudentDropdown.appendChild(option.cloneNode(true));
+            });
+        }
+        
+        // Populate school dropdown for login and transfer
+        function populateSchoolDropdown() {
+            const loginSchoolDropdown = document.getElementById('login-school');
+            const transferSchoolDropdown = document.getElementById('transfer-school');
+            
+            // Clear existing options except the first one
+            loginSchoolDropdown.innerHTML = '<option value="">Select School</option>';
+            transferSchoolDropdown.innerHTML = '<option value="">Select School</option>';
+            
+            schools.forEach(school => {
+                const option = document.createElement('option');
+                option.value = school.id;
+                option.textContent = school.name;
+                
+                loginSchoolDropdown.appendChild(option.cloneNode(true));
+                transferSchoolDropdown.appendChild(option.cloneNode(true));
+            });
+        }
+        
+        // Handle share student selection change
+        document.getElementById('share-student').addEventListener('change', function() {
+            const studentId = this.value;
+            const term = document.getElementById('share-term').value;
+            updateShareResults(studentId, term);
+        });
+        
+        document.getElementById('share-term').addEventListener('change', function() {
+            const studentId = document.getElementById('share-student').value;
+            const term = this.value;
+            updateShareResults(studentId, term);
+        });
+        
+        function updateShareResults(studentId, term) {
+            const resultDisplay = document.getElementById('share-result-display');
+            const whatsappLink = document.getElementById('whatsapp-link');
+            const emailLink = document.getElementById('email-link');
+            const printLink = document.getElementById('print-link');
+            const smsLink = document.getElementById('sms-link');
+            
+            if (!studentId) {
+                resultDisplay.innerHTML = '';
+                whatsappLink.style.display = 'none';
+                emailLink.style.display = 'none';
+                printLink.style.display = 'none';
+                smsLink.style.display = 'none';
+                return;
+            }
+            
+            const student = students.find(s => s.id === studentId);
+            let studentResults = results.filter(r => r.studentId === studentId);
+            
+            if (term !== 'All') {
+                studentResults = studentResults.filter(r => r.term === term);
+            }
+            
+            if (studentResults.length === 0) {
+                resultDisplay.innerHTML = '<div class="alert alert-danger">No results found for this student</div>';
+                whatsappLink.style.display = 'none';
+                emailLink.style.display = 'none';
+                printLink.style.display = 'none';
+                smsLink.style.display = 'none';
+                return;
+            }
+            
+            // Calculate averages
+            const subjects = {};
+            studentResults.forEach(result => {
+                if (!subjects[result.subject]) {
+                    subjects[result.subject] = [];
+                }
+                subjects[result.subject].push(result);
+            });
+            
+            let subjectAverages = [];
+            for (const subject in subjects) {
+                const average = subjects[subject].reduce((sum, result) => sum + result.score, 0) / subjects[subject].length;
+                subjectAverages.push({ subject, average });
+            }
+            
+            const overallAverage = subjectAverages.reduce((sum, subject) => sum + subject.average, 0) / subjectAverages.length;
+            
+            // Create result message
+            const subjectList = subjectAverages.map(subject => 
+                `${subject.subject}: ${subject.average.toFixed(2)} (${getGrade(subject.average).grade})`
+            ).join('%0A');
+            
+            const message = `*RESULT FOR ${student.name.toUpperCase()}*%0A%0A` +
+                           `Student ID: ${student.studentId}%0A` +
+                           `Class: ${student.grade}%0A` +
+                           `Term: ${term}%0A%0A` +
+                           `*SUBJECT SCORES*%0A` +
+                           `${subjectList}%0A%0A` +
+                           `Overall Average: ${overallAverage.toFixed(2)}%25%0A` +
+                           `Overall Grade: ${getGrade(overallAverage).grade}%0A%0A` +
+                           `Generated on: ${new Date().toLocaleDateString()}`;
+            
+            // Display result summary
+            resultDisplay.innerHTML = `
+                <div class="card">
+                    <div class="card-header">Result Summary for ${student.name}</div>
+                    <p>Student ID: ${student.studentId}</p>
+                    <p>Class: ${student.grade}</p>
+                    <p>Term: ${term}</p>
+                    <p>Overall Average: ${overallAverage.toFixed(2)}%</p>
+                    <p>Overall Grade: ${getGrade(overallAverage).grade}</p>
+                </div>
+            `;
+            
+            // Update WhatsApp link
+            whatsappLink.href = `https://wa.me/?text=${message}`;
+            whatsappLink.style.display = 'inline-block';
+            
+            // Update Email link
+            const emailSubject = `Exam Results for ${student.name}`;
+            const emailBody = `Dear ${student.parentName},\n\nPlease find the exam results for ${student.name} below:\n\n${message.replace(/%0A/g, '\n').replace(/\*/g, '')}\n\nBest regards,\nSchool Administration`;
+            emailLink.href = `mailto:${student.parentEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            emailLink.style.display = 'inline-block';
+            
+            // Update Print link
+            printLink.onclick = () => printResults(student, studentResults, term);
+            printLink.style.display = 'inline-block';
+            
+            // Update SMS link
+            smsLink.style.display = 'inline-block';
+            smsLink.dataset.studentId = studentId;
+            smsLink.dataset.term = term;
+        }
+        
+        // Send SMS with results
+        function sendSMS() {
+            const studentId = document.getElementById('share-student').value;
+            const term = document.getElementById('share-term').value;
+            
+            if (!studentId) {
+                alert('Please select a student first');
+                return;
+            }
+            
+            const student = students.find(s => s.id === studentId);
+            let studentResults = results.filter(r => r.studentId === studentId);
+            
+            if (term !== 'All') {
+                studentResults = studentResults.filter(r => r.term === term);
+            }
+            
+            if (studentResults.length === 0) {
+                alert('No results found for this student');
+                return;
+            }
+            
+            // Check if school has SMS API key
+            if (!currentSchool.smsApiKey) {
+                alert('SMS API key not configured for this school. Please contact administrator.');
+                return;
+            }
+            
+            // Calculate averages
+            const subjects = {};
+            studentResults.forEach(result => {
+                if (!subjects[result.subject]) {
+                    subjects[result.subject] = [];
+                }
+                subjects[result.subject].push(result);
+            });
+            
+            let subjectAverages = [];
+            for (const subject in subjects) {
+                const average = subjects[subject].reduce((sum, result) => sum + result.score, 0) / subjects[subject].length;
+                subjectAverages.push({ subject, average });
+            }
+            
+            const overallAverage = subjectAverages.reduce((sum, subject) => sum + subject.average, 0) / subjectAverages.length;
+            
+            // Create SMS message
+            const subjectList = subjectAverages.map(subject => 
+                `${subject.subject}: ${subject.average.toFixed(2)} (${getGrade(subject.average).grade})`
+            ).join(', ');
+            
+            const message = `Result for ${student.name}: ${subjectList}. Overall: ${overallAverage.toFixed(2)}% (${getGrade(overallAverage).grade})`;
+            
+            // Simulate SMS sending (in a real application, you would use an SMS API)
+            alert(`SMS would be sent to ${student.parentPhone} with message: ${message}`);
+        }
+        
+        // Print results function
+        function printResults(student, studentResults, term) {
+            const printWindow = window.open('', '_blank');
+            
+            // Calculate averages
+            const subjects = {};
+            studentResults.forEach(result => {
+                if (!subjects[result.subject]) {
+                    subjects[result.subject] = [];
+                }
+                subjects[result.subject].push(result);
+            });
+            
+            let subjectAverages = [];
+            for (const subject in subjects) {
+                const average = subjects[subject].reduce((sum, result) => sum + result.score, 0) / subjects[subject].length;
+                subjectAverages.push({ subject, average });
+            }
+            
+            const overallAverage = subjectAverages.reduce((sum, subject) => sum + subject.average, 0) / subjectAverages.length;
+            
+            // Use school logo if available, otherwise use default coat of arms
+            const logoHtml = currentSchool.logo ? 
+                `<img src="${currentSchool.logo}" alt="School Logo" style="height: 80px;">` :
+                `<div class="coat-of-arms" style="width: 60px; height: 60px; background: #009739; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #000;">
+                    <i class="fas fa-shield-alt" style="font-size: 30px; color: #000;"></i>
+                </div>`;
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Results for ${student.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+                        h1 { color: #009739; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background-color: #009739; color: white; }
+                        .badge { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
+                        .badge-pass { background-color: #4caf50; }
+                        .badge-credit { background-color: #2196f3; }
+                        .badge-merit { background-color: #3f51b5; }
+                        .badge-distinction { background-color: #ff4081; }
+                        .school-info { text-align: right; }
+                        .footer { margin-top: 40px; display: flex; justify-content: space-between; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        ${logoHtml}
+                        <div>
+                            <h1>Ministry of Education</h1>
+                            <p>Republic of Zambia</p>
+                        </div>
+                        <div class="school-info">
+                            <h2>${currentSchool.name}</h2>
+                            <p>${currentSchool.location}</p>
+                        </div>
+                    </div>
+                    
+                    <h2>Student Results Transcript</h2>
+                    <p><strong>Student:</strong> ${student.name}</p>
+                    <p><strong>Student ID:</strong> ${student.studentId}</p>
+                    <p><strong>Class:</strong> ${student.grade}</p>
+                    <p><strong>Term:</strong> ${term}</p>
+                    <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                    
+                    <h3>Academic Performance</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${subjectAverages.map(subject => {
+                                const gradeInfo = getGrade(subject.average);
+                                return `
+                                    <tr>
+                                        <td>${subject.subject}</td>
+                                        <td>${subject.average.toFixed(2)}</td>
+                                        <td>${gradeInfo.grade} ${gradeInfo.badge ? `<span class="badge badge-${gradeInfo.badge}">${gradeInfo.grade}</span>` : ''}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <h3>Overall Performance</h3>
+                    <p><strong>Overall Average:</strong> ${overallAverage.toFixed(2)}%</p>
+                    <p><strong>Overall Grade:</strong> ${getGrade(overallAverage).grade}</p>
+                    
+                    <div class="footer">
+                        <div>
+                            <p>_________________________</p>
+                            <p>Teacher's Signature</p>
+                        </div>
+                        <div>
+                            <p>_________________________</p>
+                            <p>Principal's Signature</p>
+                        </div>
+                    </div>
+                    
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"><\/script>
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+        
+        // Transfer student to another school
+        function transferStudent() {
+            const studentId = document.getElementById('transfer-student').value;
+            const schoolId = document.getElementById('transfer-school').value;
+            const reason = document.getElementById('transfer-reason').value;
+            
+            if (!studentId || !schoolId || !reason) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const student = students.find(s => s.id === studentId);
+            const targetSchool = schools.find(s => s.id === schoolId);
+            
+            if (!student || !targetSchool) {
+                alert('Invalid student or school selection');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to transfer ${student.name} to ${targetSchool.name}?`)) {
+                // Record transfer
+                const transfer = {
+                    id: Date.now().toString(),
+                    studentId: student.id,
+                    fromSchoolId: currentSchool.id,
+                    toSchoolId: schoolId,
+                    reason,
+                    date: new Date().toISOString()
+                };
+                
+                transfers.push(transfer);
+                localStorage.setItem('transfers', JSON.stringify(transfers));
+                
+                // Update student's school
+                student.schoolId = schoolId;
+                localStorage.setItem('students', JSON.stringify(students));
+                
+                // Update UI
+                displayStudents();
+                displayTransferHistory();
+                
+                alert(`Student ${student.name} transferred successfully to ${targetSchool.name}`);
+                
+                // Clear form
+                document.getElementById('transfer-reason').value = '';
+            }
+        }
+        
+        // Display transfer history
+        function displayTransferHistory() {
+            const transferHistory = document.getElementById('transfer-history');
+            transferHistory.innerHTML = '';
+            
+            // Filter transfers for current school
+            let filteredTransfers = [];
+            
+            if (currentUser.role === 'superadmin') {
+                filteredTransfers = transfers;
+            } else {
+                filteredTransfers = transfers.filter(t => 
+                    t.fromSchoolId === currentSchool.id || t.toSchoolId === currentSchool.id
+                );
+            }
+            
+            if (filteredTransfers.length === 0) {
+                transferHistory.innerHTML = '<tr><td colspan="5">No transfer history found</td></tr>';
+                return;
+            }
+            
+            filteredTransfers.forEach(transfer => {
+                const student = students.find(s => s.id === transfer.studentId);
+                const fromSchool = schools.find(s => s.id === transfer.fromSchoolId);
+                const toSchool = schools.find(s => s.id === transfer.toSchoolId);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(transfer.date).toLocaleDateString()}</td>
+                    <td>${student ? student.name : 'Unknown Student'}</td>
+                    <td>${fromSchool ? fromSchool.name : 'Unknown School'}</td>
+                    <td>${toSchool ? toSchool.name : 'Unknown School'}</td>
+                    <td>${transfer.reason}</td>
+                `;
+                transferHistory.appendChild(row);
+            });
+        }
+        
+        // Promote students to next year
+        function promoteStudents() {
+            if (currentUser.role !== 'admin') {
+                alert('Only School Admin can promote students');
+                return;
+            }
+            
+            const year = document.getElementById('promotion-year').value;
+            
+            if (!year) {
+                alert('Please enter an academic year');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to promote all students to the next grade? This action cannot be undone.')) {
+                let promotedCount = 0;
+                
+                // Filter students for current school
+                const schoolStudents = students.filter(student => student.schoolId === currentSchool.id);
+                
+                schoolStudents.forEach(student => {
+                    const currentGrade = student.grade;
+                    
+                    // Define promotion mapping
+                    const promotionMap = {
+                        'Grade 1': 'Grade 2',
+                        'Grade 2': 'Grade 3',
+                        'Grade 3': 'Grade 4',
+                        'Grade 4': 'Grade 5',
+                        'Grade 5': 'Grade 6',
+                        'Grade 6': 'Grade 7',
+                        'Grade 7': 'Form 1',
+                        'Form 1': 'Form 2',
+                        'Form 2': 'Form 3',
+                        'Form 3': 'Form 4',
+                        'Form 4': 'Graduated'
+                    };
+                    
+                    if (promotionMap[currentGrade]) {
+                        student.grade = promotionMap[currentGrade];
+                        promotedCount++;
+                    }
+                });
+                
+                // Save updated students
+                localStorage.setItem('students', JSON.stringify(students));
+                
+                // Record promotion history
+                const promotion = {
+                    id: Date.now().toString(),
+                    schoolId: currentSchool.id,
+                    year,
+                    date: new Date().toLocaleDateString(),
+                    studentsPromoted: promotedCount
+                };
+                
+                promotions.push(promotion);
+                localStorage.setItem('promotions', JSON.stringify(promotions));
+                
+                // Update UI
+                displayStudents();
+                displayPromotionHistory();
+                
+                alert(`Successfully promoted ${promotedCount} students for academic year ${year}`);
+            }
+        }
+        
+        // Make student repeat grade
+        function repeatGrade() {
+            const studentId = document.getElementById('repeat-student').value;
+            
+            if (!studentId) {
+                alert('Please select a student');
+                return;
+            }
+            
+            const student = students.find(s => s.id === studentId);
+            
+            if (!student) {
+                alert('Student not found');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to make ${student.name} repeat ${student.grade}?`)) {
+                // In a real system, you might want to keep the student in the same grade
+                // and possibly reset their results for the current year
+                
+                // For now, we'll just add a note to the student record
+                if (!student.notes) {
+                    student.notes = [];
+                }
+                
+                student.notes.push({
+                    type: 'Repeat Grade',
+                    date: new Date().toLocaleDateString(),
+                    message: `Student repeated ${student.grade}`
+                });
+                
+                // Save updated students
+                localStorage.setItem('students', JSON.stringify(students));
+                
+                // Update UI
+                displayStudents();
+                
+                alert(`${student.name} will repeat ${student.grade}`);
+            }
+        }
+        
+        // Display promotion history
+        function displayPromotionHistory() {
+            const promotionHistory = document.getElementById('promotion-history');
+            promotionHistory.innerHTML = '';
+            
+            // Filter promotions for current school
+            let filteredPromotions = [];
+            
+            if (currentUser.role === 'superadmin') {
+                filteredPromotions = promotions;
+            } else {
+                filteredPromotions = promotions.filter(p => p.schoolId === currentSchool.id);
+            }
+            
+            if (filteredPromotions.length === 0) {
+                promotionHistory.innerHTML = '<tr><td colspan="3">No promotion history found</td></tr>';
+                return;
+            }
+            
+            filteredPromotions.forEach(promotion => {
+                const school = schools.find(s => s.id === promotion.schoolId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${promotion.date}</td>
+                    <td>${promotion.year}</td>
+                    <td>${promotion.studentsPromoted} ${school ? `(${school.name})` : ''}</td>
+                `;
+                promotionHistory.appendChild(row);
+            });
+        }
+        
+        // Helper function to get grade
+        function getGrade(score) {
+            if (score >= 70) return { grade: 'Distinction', badge: 'distinction' };
+            if (score >= 61) return { grade: 'Merit', badge: 'merit' };
+            if (score >= 51) return { grade: 'Credit', badge: 'credit' };
+            if (score >= 40) return { grade: 'Pass', badge: 'pass' };
+            return { grade: 'Fail', badge: '' };
+        }
+        
+        // Preview uploaded image
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('preview-img');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Add activity to recent activities
+        function addActivity(activity) {
+            const activitiesList = document.getElementById('recent-activities');
+            const newActivity = document.createElement('li');
+            newActivity.style.padding = '10px';
+            newActivity.style.borderBottom = '1px solid #eee';
+            newActivity.innerHTML = `<i class="fas fa-info-circle text-info"></i> ${activity} - ${new Date().toLocaleTimeString()}`;
+            
+            // Add to top of list
+            activitiesList.insertBefore(newActivity, activitiesList.firstChild);
+            
+            // Limit to 5 activities
+            if (activitiesList.children.length > 5) {
+                activitiesList.removeChild(activitiesList.lastChild);
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear current user and school
+                currentUser = null;
+                currentSchool = null;
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('currentSchool');
+                
+                // Show login section, hide main system
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('main-system').style.display = 'none';
+                
+                // Clear login form
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+                document.getElementById('login-school').value = '';
+            }
+        }
+        
+        // Student portal - check results by ID
+        function checkStudentResults() {
+            const studentId = document.getElementById('student-portal-id').value;
+            
+            if (!studentId) {
+                alert('Please enter a Student ID');
+                return;
+            }
+            
+            const student = students.find(s => s.studentId === studentId);
+            
+            if (!student) {
+                alert('Student not found with the provided ID');
+                return;
+            }
+            
+            const studentResults = results.filter(r => r.studentId === student.id);
+            
+            if (studentResults.length === 0) {
+                alert('No results found for this student');
+                return;
+            }
+            
+            // Show results in a new window
+            const resultWindow = window.open('', '_blank');
+            resultWindow.document.write(`
+                <html>
+                <head>
+                    <title>Student Results - ${student.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+                        .coat-of-arms { width: 60px; height: 60px; background: #009739; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #000; }
+                        .coat-of-arms i { font-size: 30px; color: #000; }
+                        h1 { color: #009739; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background-color: #009739; color: white; }
+                        .badge { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
+                        .badge-pass { background-color: #4caf50; }
+                        .badge-credit { background-color: #2196f3; }
+                        .badge-merit { background-color: #3f51b5; }
+                        .badge-distinction { background-color: #ff4081; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="coat-of-arms">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h1>Ministry of Education</h1>
+                            <p>Republic of Zambia</p>
+                        </div>
+                    </div>
+                    
+                    <h2>Student Results</h2>
+                    <p><strong>Student:</strong> ${student.name}</p>
+                    <p><strong>Student ID:</strong> ${student.studentId}</p>
+                    <p><strong>Class:</strong> ${student.grade}</p>
+                    
+                    <h3>Academic Performance</h3>
+            `);
+            
+            // Group results by term
+            const resultsByTerm = {};
+            studentResults.forEach(result => {
+                if (!resultsByTerm[result.term]) {
+                    resultsByTerm[result.term] = [];
+                }
+                resultsByTerm[result.term].push(result);
+            });
+            
+            // Display results for each term
+            for (const term in resultsByTerm) {
+                resultWindow.document.write(`
+                    <h4>${term} Results</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `);
+                
+                resultsByTerm[term].forEach(result => {
+                    resultWindow.document.write(`
+                        <tr>
+                            <td>${result.subject}</td>
+                            <td>${result.score}</td>
+                            <td>${getGrade(result.score).grade} ${getGrade(result.score).badge ? `<span class="badge badge-${getGrade(result.score).badge}">${getGrade(result.score).grade}</span>` : ''}</td>
+                        </tr>
+                    `);
+                });
+                
+                resultWindow.document.write(`
+                        </tbody>
+                    </table>
+                `);
+            }
+            
+            resultWindow.document.write(`
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"><\/script>
+                </body>
+                </html>
+            `);
+            resultWindow.document.close();
+        }
+        
+        // Initialize the application when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
